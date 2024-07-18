@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\daftarsurat;
+use App\Models\suratskd;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,43 +36,38 @@ class DatabaseSeeder extends Seeder
             User::create($val); 
         }
 
-        DB::table('penduduks')->insert([
-            [
-                'NIK' => '1234567890123456',
-                'nama_depan' => 'Budi',
-                'nama_belakang' => 'Santoso',
-                'tanggal_lahir' => '1980-01-01',
-                'desa' => 'Desa Maju',
-                'RT' => 1,
-                'RW' => 1,
-                'status' => 'menetap',
+        $faker = Faker::create('id_ID');
+        $niks = [];
+
+        // Generate 50 unique NIKs
+        while (count($niks) < 50) {
+            $nik = $faker->unique()->numerify('################');
+            $niks[] = $nik;
+        }
+
+        foreach ($niks as $nik) {
+            DB::table('penduduks')->insert([
+                'NIK' => $nik,
+                'kk' => $faker->numerify('################'),
+                'nama' => $faker->name,
+                'jenis_kelamin' => $faker->randomElement(['L', 'P']),
+                'tempat_lahir' => $faker->city,
+                'tanggal_lahir' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Kong Hu Cu']),
+                'status_perkawinan' => $faker->randomElement(['kawin', 'belum_kawin']),
+                'shdk' => $faker->randomElement(['Kepala Keluarga', 'Istri', 'Anak']),
+                'pendidikan' => $faker->randomElement(['SD', 'SMP', 'SMA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3']),
+                'pekerjaan' => $faker->jobTitle,
+                'nama_ayah' => $faker->name('male'),
+                'nama_ibu' => $faker->name('female'),
+                'dusun' => 'Dusun ' . $faker->numberBetween(1, 10),
+                'RT' => $faker->numberBetween(1, 10),
+                'RW' => $faker->numberBetween(1, 10),
+                'kewarganegaraan'=> $faker->randomElement(['WNI', 'WNA']),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'NIK' => '2345678901234567',
-                'nama_depan' => 'Siti',
-                'nama_belakang' => 'Aisyah',
-                'tanggal_lahir' => '1985-02-02',
-                'desa' => 'Desa Sejahtera',
-                'RT' => 2,
-                'RW' => 2,
-                'status' => 'pindah',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'NIK' => '3456789012345678',
-                'nama_depan' => 'Ahmad',
-                'nama_belakang' => 'Zulkarnain',
-                'tanggal_lahir' => '1990-03-03',
-                'desa' => 'Desa Makmur',
-                'RT' => 3,
-                'RW' => 3,
-                'status' => 'meninggal',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ]);
+        }
+
     }
 }

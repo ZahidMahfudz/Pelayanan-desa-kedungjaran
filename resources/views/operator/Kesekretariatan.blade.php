@@ -1,4 +1,76 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
-    ini halaman kesekretariatan untuk operator
+    <x-slot:tabs>Kedungjaran-Kesekretariatan</x-slot>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nomor Surat</th>
+                <th>Tanggal</th>
+                <th>Perihal</th>
+                <th>Pemohon</th>
+                <th>Status surat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data as $item)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->nomor_surat }}</td>
+                    <td>{{ $item->tanggal_surat }}</td>
+                    <td>{{ $item->jenis_surat }}</td>
+                    <td>{{ $item->pemohon }}</td>
+                    <td>
+                        @if ($item->status_surat == 'sudah_cetak')
+                            <span class="badge bg-success">Sudah Cetak</span>
+                        @elseif ($item->status_surat == 'belum_cetak')
+                            <span class="badge rounded-pill bg-danger">Belum Cetak</span>
+                        @else
+                            {{ $item->status_surat }}
+                        @endif
+                    </td>
+                    <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Aksi
+                            </button>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/showeditsurat/{{ $item->id }}">Edit</a></li>
+                            <li><a class="dropdown-item" href="/cetaksurat/{{ $item->id }}" target="_blank">Cetak</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item hapussurat" href="/hapussurat/{{ $item->id }}" data-nomor-surat="{{ $item->nomor_surat }}">Hapus</a></li>
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $(document).on('click', '.hapussurat', function(e) {
+                                        e.preventDefault();
+                                        var link = $(this).attr("href");
+                                        var nomorsurat = $(this).data("nomor-surat");
+                                
+                                        Swal.fire({
+                                            title: "Apakah anda yakin?",
+                                            text: "Untuk menghapus " + nomorsurat,
+                                            icon: "warning",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#3085d6",
+                                            cancelButtonColor: "#d33",
+                                            confirmButtonText: "Ya, Hapus!",
+                                            cancelButtonText: "Batal"
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = link;
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </x-layout>

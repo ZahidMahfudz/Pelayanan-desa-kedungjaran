@@ -9,14 +9,34 @@ class penduduk extends Model
 {
     use HasFactory;
 
+    protected $table = 'penduduks';
+    protected $primaryKey = 'NIK';
+    public $incrementing = false;
+
     protected $fillable = [
         'NIK',
-        'nama_depan',
-        'nama_belakang',
+        'kk',
+        'nama',
+        'jenis_kelamin',
+        'tempat_lahir',
         'tanggal_lahir',
-        'desa',
+        'agama',
+        'status_perkawinan',
+        'shdk',
+        'pendidikan',
+        'pekerjaan',
+        'nama_ayah',
+        'nama_ibu',
+        'dusun',
         'RT',
         'RW',
-        'Status',
+        'kewarganegaraan',
     ];
+
+    public function daftarsurat()
+    {
+        return $this->hasMany(daftarsurat::class, 'NIK', 'NIK');
+    }
+
+    
 }

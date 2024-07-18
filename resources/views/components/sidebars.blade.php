@@ -22,7 +22,6 @@
     </symbol>
   </svg>
 
-<div class="d-flex mt-0" style="position: fixed;">
     <div class="flex-column flex-shrink-0 p-3 mt-0" style="width: 280px; height: 100vh; background-color:rgb(239, 239, 239);">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
@@ -35,6 +34,12 @@
             <a href="/user/operator/kesekretariatan" class="{{ request()->is('user/operator/kesekretariatan') ? 'nav-link active' : 'nav-link link-dark' }}">
               <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
               Kesekretariatan
+            </a>
+          </li>
+          <li>
+            <a href="/user/operator/buatsurat" class="{{ request()->is('user/operator/buatsurat') ? 'nav-link active' : 'nav-link link-dark' }}">
+              <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+              Buat Surat
             </a>
           </li>
           {{-- <li>
@@ -50,4 +55,4 @@
             </a>
           </li>
         </ul>
-</div>
+    </div>
