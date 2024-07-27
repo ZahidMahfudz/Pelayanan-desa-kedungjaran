@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
     <x-slot:tabs>Kedungjaran-Penduduk</x-slot>
-    <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="d-flex flex-row bd-highlight">
         <div class="d-flex mt-2">
             <form method="GET" action="{{ route('showPenduduk') }}" class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Cari nama atau NIK..." name="cariPenduduk" id="searchInput" value="{{ request('cariPenduduk') }}">
@@ -11,7 +11,38 @@
         <div class="p-2 bd-highlight">
             <a href="show_tambah_penduduk" class="btn btn-primary">Tambah Penduduk</a>
         </div>
+        <div class="p-2 bd-highlight">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">Import Excel</button>
+        </div>
     </div>
+
+    <div class="modal fade" id="importExcel" tabindex="-1" aria-labelledby="importExcelLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="importExcelLabel">Tambahkan Data Penduduk Lewat Excel</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="importPenduduk" action="{{ Route('importPenduduk') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div>
+                    <label for="import_file" class="form-label">Tambahkan File Excel</label>
+                    <input type="file" class="form-control" id="import_file" name="import_file" required>
+                    @error('import_file')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+
     <div class="mt-2">
         <table class="table table-striped table-hover">
             <thead>

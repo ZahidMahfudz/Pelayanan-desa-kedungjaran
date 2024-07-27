@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PendudukImport;
 use App\Models\daftarsurat;
+use App\Models\namattdkades;
 use App\Models\penduduk;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use PHPUnit\Framework\Constraint\Operator;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
@@ -241,5 +245,95 @@ class OperatController extends Controller
     public function showbuatsurat(){
         $title = 'Buat Surat';
         return view('operator.BuatSurat', compact('title'));
+    }
+
+    public function showTTD(){
+        $title = 'Nama Dan Tanda Tangan Kepala Desa';
+
+        $ttd = namattdkades::all();
+
+        return view('operator.namattdkades', compact('title', 'ttd'));
+    }
+
+    public function addnamattdkades(Request $request){
+        $request->validate([
+            'nama_kades' => 'required|string|max:255',
+            'nama_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        if ($request->hasFile('nama_file')) {
+            $nm = $request->file('nama_file');
+            // Mendapatkan ukuran gambar
+            list($width, $height) = getimagesize($nm);
+            
+            // Validasi untuk memastikan gambar memiliki orientasi 1:1
+            if ($width != $height) {
+                return redirect()->back()->with('error', 'Gambar harus memiliki orientasi 1:1 (persegi).');
+            }
+            $namafile = time().rand(100,999).".".$nm->getClientOriginalExtension();
+    
+            // Simpan nama file dan nama kades ke dalam tabel
+            $dtuplaod = new namattdkades;
+            $dtuplaod->nama_kades = $request->input('nama_kades');
+            $dtuplaod->nama_gambar = $namafile;
+    
+            // Pindahkan file gambar ke direktori public/image dengan nama asli file
+            $nm->move(public_path('image'), $namafile);
+            $dtuplaod->save();
+    
+            return redirect()->back()->with('success', 'Nama dan Tanda Tangan Berhasil Ditambahkan.');
+        }
+    
+        return redirect()->back()->with('error', 'File not uploaded.');
+    }
+    
+
+    public function editTTD(Request $request, $id){
+        // dd($request->all());
+        $request->validate([
+            'nama_kades' => 'required|string|max:255',
+            'file_baru' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $kades = namattdkades::findOrFail($id);
+
+        if(!$kades){
+            return redirect()->back()->with('error', 'Nama dan Tanda Tangan Tidak ditemukan');
+        }
+
+        $namaGambarLama = $kades->nama_gambar;
+
+        $data = [
+            'nama_kades' => $request->input('nama_kades'),
+            'nama_gambar' => $namaGambarLama
+        ];
+
+        if ($request->hasFile('file_baru')) {
+            $file = $request->file('file_baru');
+            // Pindahkan file baru dengan nama file yang sama seperti nama file lama
+            $file->move(public_path('image'), $namaGambarLama);
+        }
+
+        $kades->update($data);
+
+        return redirect()->back()->with('success', 'Data has been updated successfully.');
+    }
+
+    public function importPenduduk(Request $request){
+        $request->validate([
+            'import_file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
+
+        Excel::import(new PendudukImport, $request->file('import_file')->store('temp'));
+
+        return redirect('/user/operator/datapenduduk')->with('success', 'Import Data Berhasil');
+    }
+
+    public function rekapsurat(){
+        $surat = daftarsurat::all();
+        $judulsurat = 'Rekap Surat';
+
+        return view('cetaksurat.daftarsurat', compact('surat', 'judulsurat'));
+
     }
 }

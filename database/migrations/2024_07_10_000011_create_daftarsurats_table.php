@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nomor_surat');
             $table->date('tanggal_surat');
             $table->string('jenis_surat');
-            $table->string('pemohon');
+            $table->string('nama_pemohon');
+            $table->string('nik_pemohon');
             $table->enum('status_surat', ['belum_cetak', 'sudah_cetak']);
             $table->timestamps();
         });

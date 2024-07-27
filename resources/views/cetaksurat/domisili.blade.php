@@ -122,8 +122,11 @@
 
     <x-ttdkades>
         <x-slot:tanggalsurat>{{ $tanggal_surat }}</x-slot>
-        <x-slot:namakades>Zahid Muhammad Mahfudz, S.Kom</x-slot>
-        <x-slot:nipkades>24060121130043</x-slot>
+        @foreach ($ttd as $ttd)
+            <x-slot:nama_gambar>{{ $ttd->nama_gambar }}</x-slot>
+            <x-slot:nama_kades>{{ $ttd->nama_kades }}</x-slot>
+        @endforeach
+        <x-slot:ttdlain></x-slot>
     </x-ttdkades>
 
 </x-layoutsurat>

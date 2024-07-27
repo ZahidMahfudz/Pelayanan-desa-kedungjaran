@@ -13,7 +13,8 @@
         integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/9hb7ie6C2ltYz5Y6zF11SAx0n3zUn9Yrv1+nq2" 
         crossorigin="anonymous" 
         referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     
 </head>
 
 @if (session('success'))
