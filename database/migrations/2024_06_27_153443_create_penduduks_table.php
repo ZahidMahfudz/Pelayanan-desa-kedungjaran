@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('agama');
-            $table->enum('status_perkawinan', ['kawin','belum_kawin']);
+            $table->string('status_perkawinan');
             $table->string('shdk');
             $table->string('pendidikan');
             $table->string('pekerjaan');

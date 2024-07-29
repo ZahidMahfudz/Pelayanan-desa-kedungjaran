@@ -51,11 +51,7 @@
             </div>
             <div class="mb-3">
                 <label for="status_perkawinan" class="form-label">Status Perkawinan</label>
-                <select class="form-select" id="status_perkawinan" name="status_perkawinan" required>
-                    <option value="" disabled selected>-- Pilih Status Perkawinan --</option>
-                    <option value="kawin">Kawin</option>
-                    <option value="belum_kawin">Belum Kawin</option>
-                </select>
+                <input type="text" class="form-control" id="status_perkawinan" name="status_perkawinan" required>
             </div>
             <div class="mb-3">
                 <label for="shdk" class="form-label ">Status Hubungan Dalam Keluarga</label>
@@ -99,7 +95,7 @@
                     <option value="WNA">WNA</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary addpenduduk mt-3">Tambah</button>
+            <button type="submit" class="btn btn-primary addpenduduk mt-3 mb-4">Tambah</button>
 
             <script type="text/javascript">
                 $(document).ready(function() {

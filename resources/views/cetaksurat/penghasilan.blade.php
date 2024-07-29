@@ -106,7 +106,7 @@
             <tr>
                 <td style="width: 25%;">Keterangan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">
+                <td style="width: 72%;" class="justify">
                     Bahwa orang tersebut benar-benar warga Desa Kedungjaran yang pekerjaannya {{ $penduduk->pekerjaan }} dengan penghasilan Rp.{{ number_format($suratpenghasilan->penghasilan) }} Per Bulan
                 </td>
             </tr>
@@ -119,18 +119,20 @@
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian Surat Keterangan Domisili ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian Surat Keterangan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     
-
     <x-ttdkades>
         <x-slot:tanggalsurat>{{ $tanggal_surat }}</x-slot>
+        @foreach ($ttd as $ttd)
+            <x-slot:nama_gambar>{{ $ttd->nama_gambar }}</x-slot>
+            <x-slot:nama_kades>{{ $ttd->nama_kades }}</x-slot>
+        @endforeach
         <x-slot:ttdlain>
             <p>Pemegang Surat</p>
-            <p style="text-decoration: underline; margin-top:89;"><strong>{{ $daftarsurat->nama_pemohon }}</strong></p>
+            <p style="text-decoration: underline; margin-top:89;">(...................................)</p>
         </x-slot>
-        
     </x-ttdkades>
 
 </x-layoutsurat>

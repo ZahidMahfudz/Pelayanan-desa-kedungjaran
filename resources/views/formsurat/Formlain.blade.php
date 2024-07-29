@@ -1,6 +1,10 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
     <x-slot:tabs>Buat SK</x-slot>
+
+    <div class="alert alert-warning mt-3" role="alert">
+        <p style="margin-bottom: 0;">Nomor Surat Terakhir : {{ $nomor_surat }}</p>
+    </div>
         
         <form id="skForm" action="submit_lain" method="POST">
             @csrf
@@ -43,7 +47,7 @@
                 </div>
             </fieldset>
             <!-- Lanjutkan dengan fieldset lain -->
-            <button type="submit" class="btn btn-primary mt-3 addsk">Buat</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-4 addsk">Buat</button>
         </form>
     
         <script type="text/javascript">

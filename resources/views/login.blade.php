@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
+    <link rel="icon" type="image/png" href="{{ asset('image/logo-pekalongan.png') }}">
     <title>Kedungjaran-Login</title>
 
     {{-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> --}}
@@ -41,8 +42,8 @@
 <main class="form-signin">
   <form action="" method="POST">
     @csrf
-    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Silahkan masuk</h1>
+    <img class="mb-4" src={{ asset('image/logo-pekalongan.png') }} alt="" width="70" height="90">
+    <h2 class="h3 mb-3 fw-normal">Aplikasi Pelayanan Desa Kedungjaran</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -53,7 +54,9 @@
             </ul>
         </div>
     @endif
-
+    <div>
+      <p>Silahkan masuk</p>
+    </div>
     <div class="form-floating">
       <input type="text" class="form-control" name='username' id="floatingInput" placeholder="name@example.com" value="{{ old('username') }}">
       <label for="floatingInput">Username</label>

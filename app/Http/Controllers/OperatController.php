@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\PendudukImport;
+use App\Models\penduduk;
 use App\Models\daftarsurat;
 use App\Models\namattdkades;
-use App\Models\penduduk;
 use Illuminate\Http\Request;
+use App\Imports\PendudukImport;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use PHPUnit\Framework\Constraint\Operator;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
+use App\Models\suratsk;
+use App\Models\suratskd;
+use App\Models\suratskck;
+use App\Models\suratsktm;
+use App\Models\suratsktmsiswa;
+use App\Models\suratwalinikah;
+use App\Models\suratkehilangan;
+use App\Models\suratpenghasilan;
+use Illuminate\Support\Facades\DB;
 
 class OperatController extends Controller
 {
     public function showKesekretariatan(){
         $title = 'Kesekretariatan';
-        $data = daftarsurat::orderBy('created_at', 'desc')->get();
+        $data = daftarsurat::orderBy('created_at', 'desc')->paginate(10);
         return view('operator.kesekretariatan', compact('title', 'data'));
     }
 
@@ -47,7 +57,7 @@ class OperatController extends Controller
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'agama' => 'required|string|max:255',
-            'status_perkawinan' => 'required|in:kawin,belum_kawin',
+            'status_perkawinan' => 'required|string|max:255',
             'shdk' => 'required|string|max:255',
             'pendidikan' => 'required|string|max:255',
             'pekerjaan' => 'required|string|max:255',
@@ -75,7 +85,6 @@ class OperatController extends Controller
             'agama.string' => 'Agama harus berupa teks.',
             'agama.max' => 'Agama maksimal 255 karakter.',
             'status_perkawinan.required' => 'Status perkawinan wajib diisi.',
-            'status_perkawinan.in' => 'Status perkawinan harus kawin atau belum kawin.',
             'shdk.required' => 'SHDK wajib diisi.',
             'shdk.string' => 'SHDK harus berupa teks.',
             'shdk.max' => 'SHDK maksimal 255 karakter.',
@@ -146,7 +155,7 @@ class OperatController extends Controller
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'agama' => 'required|string|max:255',
-            'status_perkawinan' => 'required|in:kawin,belum_kawin',
+            'status_perkawinan' => 'required|string|max:255',
             'shdk' => 'required|string|max:255',
             'pendidikan' => 'required|string|max:255',
             'pekerjaan' => 'required|string|max:255',
@@ -177,7 +186,6 @@ class OperatController extends Controller
             'agama.string' => 'Agama harus berupa teks.',
             'agama.max' => 'Agama maksimal 255 karakter.',
             'status_perkawinan.required' => 'Status perkawinan wajib diisi.',
-            'status_perkawinan.in' => 'Status perkawinan harus kawin atau belum kawin.',
             'shdk.required' => 'SHDK wajib diisi.',
             'shdk.string' => 'SHDK harus berupa teks.',
             'shdk.max' => 'SHDK maksimal 255 karakter.',
@@ -239,7 +247,35 @@ class OperatController extends Controller
 
     public function showdashboard(){
         $title = 'Dashboard';
-        return view('operator.Dashboard', compact('title'));
+
+        $nomor_surat_terakhir = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        $total_surat = daftarsurat::count();
+
+        $suratData = [
+            'SK' => daftarsurat::where('jenis_surat', 'SK')->count(),
+            'SKD' => daftarsurat::where('jenis_surat', 'SKD')->count(),
+            'SKTM Siswa' => daftarsurat::where('jenis_surat', 'SKTMS')->count(),
+            'SKTM' => daftarsurat::where('jenis_surat', 'SKTM')->count(),
+            'SKK' => daftarsurat::where('jenis_surat', 'SKK')->count(),
+            'SKWN' => daftarsurat::where('jenis_surat', 'SKWN')->count(),
+            'SKP' => daftarsurat::where('jenis_surat', 'SKP')->count(),
+            'SKCK' => daftarsurat::where('jenis_surat', 'SKCK')->count(),
+            'Lain-lain' => daftarsurat::whereNotIn('jenis_surat', ['SK', 'SKD', 'SKTMS', 'SKTM', 'SKK', 'SKWN', 'SKP', 'SKCK'])->count()
+        ];
+
+        $total_penduduk = penduduk::count();
+
+        $dusunData = Penduduk::selectRaw('dusun, 
+                                          SUM(CASE WHEN jenis_kelamin = "L" THEN 1 ELSE 0 END) as L, 
+                                          SUM(CASE WHEN jenis_kelamin = "P" THEN 1 ELSE 0 END) as P,
+                                          COUNT(*) as Total')
+                             ->groupBy('dusun')
+                             ->get();
+
+        return view('operator.Dashboard', compact('title', 'nomor_surat_terakhir','total_surat', 'suratData', 'total_penduduk', 'dusunData'));
     }
 
     public function showbuatsurat(){
@@ -335,5 +371,67 @@ class OperatController extends Controller
 
         return view('cetaksurat.daftarsurat', compact('surat', 'judulsurat'));
 
+    }
+
+    public function hapusdaftarsurat(){
+        try {
+            DB::beginTransaction();
+
+            // Fetch all daftarsurat entries
+            $daftarSurat = daftarsurat::all();
+
+            // Loop through each daftarsurat entry
+            foreach ($daftarSurat as $surat) {
+                // Delete associated suratskd entry if it exists
+                if ($surat->suratskd) {
+                    $surat->suratskd()->delete();
+                }
+
+                // Delete associated suratsk entry if it exists
+                if ($surat->suratsk) {
+                    $surat->suratsk()->delete();
+                }
+
+                // Delete associated suratsktmsiswa entry if it exists
+                if ($surat->suratsktmsiswa) {
+                    $surat->suratsktmsiswa()->delete();
+                }
+
+                // Delete associated suratsktm entry if it exists
+                if ($surat->suratsktm) {
+                    $surat->suratsktm()->delete();
+                }
+
+                // Delete associated suratkehilangan entry if it exists
+                if ($surat->suratkehilangan) {
+                    $surat->suratkehilangan()->delete();
+                }
+
+                // Delete associated suratwalinikah entry if it exists
+                if ($surat->suratwalinikah) {
+                    $surat->suratwalinikah()->delete();
+                }
+
+                // Delete associated suratpenghasilan entry if it exists
+                if ($surat->suratpenghasilan) {
+                    $surat->suratpenghasilan()->delete();
+                }
+
+                // Delete associated suratskck entry if it exists
+                if ($surat->suratskck) {
+                    $surat->suratskck()->delete();
+                }
+
+                // Delete the daftarsurat entry
+                $surat->delete();
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Semua surat berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Handle any errors
+            return redirect()->back()->with('error', 'Gagal menghapus surat: ' . $e->getMessage());
+        }
     }
 }

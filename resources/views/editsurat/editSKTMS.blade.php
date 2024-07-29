@@ -1,18 +1,15 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
-    <x-slot:tabs>Buat SKTM Siswa</x-slot>
+    <x-slot:tabs>Buat SKD</x-slot>
 
-    <div class="alert alert-warning mt-3" role="alert">
-        <p>Nomor Surat Terakhir : {{ $nomor_surat }}</p>
-    </div>
     
-    <form id="domisiliForm" action="submit_SKTMS" method="POST">
+    <form id="editSKTMS" action="{{ route('edit_SKTMS', ['id'=>$surat->id]) }}" method="POST">
         @csrf
         <fieldset>
             <legend>Nomor Surat</legend>
             <div>
                 <div class="col-sm-10">
-                    <input type="text" name="nomor_surat" id="nomor_surat" class="form-control"></input>
+                    <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}" disabled></input>
                 </div>
             </div>
         </fieldset>
@@ -22,9 +19,11 @@
                 <label for="searchWaliMurid" class="form-label">Cari Wali Murid</label>
                 <div class="col-sm-10">
                     <select id="searchWaliMurid" class="form-select">
-                        
+                        @if($surat)
+                            <option value="{{ $surat->nik_pemohon }}" selected>{{ $surat->nama_pemohon }} | {{ $surat->nik_pemohon }}</option>
+                        @endif
                     </select>
-                    <input type="hidden" id="selectedNIKWaliMurid" name="selectedNIKWaliMurid">
+                    <input type="hidden" id="selectedNIKWaliMurid" name="selectedNIKWaliMurid"  value="{{ $surat->nik_pemohon }}">
                 </div>
             </div>
             <div class="card col-sm-10" style="display: none;" id="waliMuridDetails">
@@ -43,9 +42,11 @@
                 <label for="searchMurid" class="form-label">Cari Murid</label>
                 <div class="col-sm-10">
                     <select id="searchMurid" class="form-select">
-
+                        @if($sktms)
+                            <option value="{{ $sktms->nik_murid }}" selected>{{ $siswa->nama }} | {{ $sktms->nik_murid }}</option>
+                        @endif
                     </select>
-                    <input type="hidden" id="selectedNIKMurid" name="selectedNIKMurid">
+                    <input type="hidden" id="selectedNIKMurid" name="selectedNIKMurid"  value="{{ $sktms->nik_murid }}">
                 </div>
             </div>
             <div class="card col-sm-10" style="display: none;" id="muridDetails">
@@ -63,16 +64,16 @@
             <div>
                 <div class="col-sm-10">
                     <label for="asal_sekolah" class="form-label">Asal Sekolah </label>
-                    <textarea name="asal_sekolah" id="asal_sekolah" cols="5" rows="5" class="form-control"></textarea>
+                    <textarea name="asal_sekolah" id="asal_sekolah" cols="5" rows="5" class="form-control">{{ $sktms->asal_sekolah }}</textarea>
                 </div>
                 <div class="col-sm-10">
                     <label for="keperluan" class="form-label">Tulis Keperluan Surat</label>
-                    <textarea name="keperluan" id="keperluan" cols="5" rows="5" class="form-control"></textarea>
+                    <textarea name="keperluan" id="keperluan" cols="5" rows="5" class="form-control">{{ $sktms->keperluan }}</textarea>
                 </div>
             </div>
         </fieldset>
         <!-- Lanjutkan dengan fieldset lain -->
-        <button type="submit" class="btn btn-primary mt-3 mb-4 addsktm">Buat</button>
+        <button type="submit" class="btn btn-primary mt-3 addsktm">Edit</button>
     </form>
 
     <script type="text/javascript">

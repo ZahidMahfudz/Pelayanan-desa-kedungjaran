@@ -14,6 +14,46 @@
         crossorigin="anonymous" 
         referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ asset('image/logo-pekalongan.png') }}">
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        /* .main-content {
+            overflow-x: auto;
+            flex-grow: 1;
+        } */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+        }
+        .sidebar {
+            position: fixed;
+            top: 72px; /* Adjust this based on your header height */
+            bottom: 0;
+            width: 280px; /* Adjust this based on sidebar width */
+            z-index: 1000;
+            background-color: rgb(239, 239, 239);
+            /* overflow-y: auto; */
+        }
+        .content {
+            margin-top: 75px;
+            margin-left: 280px; /* Adjust based on sidebar width */
+            padding: 20px;
+            flex-grow: 1;
+            /* overflow-y: auto; */
+            height: calc(100vh - 60px); /* Adjust this based on your header height */
+        }
+        .full-height {
+            height: 100vh;
+        }
+    </style>
      
 </head>
 
@@ -40,22 +80,20 @@
     </script>
 @endif
 
-<div class="d-flex flex-column bd-highlight mb-3">
-    <div class="p-0 bd-highlight">
+<div class="d-flex flex-column full-height">
+    <div class="sticky-header">
         <x-header></x-header>
     </div>
-    <div class="p-0 bd-highlight">
-        <div class="d-flex flex-row bd-highlight mb-0">
-            <div class="p-0 bd-highlight">
-                <x-sidebars></x-sidebars>
+    <div class="d-flex flex-grow-1">
+        <div class="sidebar">
+            <x-sidebars></x-sidebars>
+        </div>
+        <div class="p-3 flex-grow-1 content main-content">
+            <div class="border-bottom">
+                <h3>{{ $title }}</h3>
             </div>
-            <div class="p-3 bd-highlight d-block" style="width: 100%;">
-                <div class="border-bottom">
-                    <h3>{{ $title }}</h3>
-                </div>
-                <div class="mt-2">
-                    {{ $slot }}                    
-                </div>
+            <div class="mt-2">
+                {{ $slot }}                    
             </div>
         </div>
     </div>

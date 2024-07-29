@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\suratsk;
+use App\Models\penduduk;
+use App\Models\suratskd;
+use App\Models\suratskck;
+use App\Models\suratsktm;
 use App\Models\daftarsurat;
 use App\Models\namattdkades;
-use App\Models\penduduk;
-use App\Models\suratkehilangan;
-use App\Models\suratpenghasilan;
-use App\Models\suratsk;
-use App\Models\suratskck;
-use App\Models\suratskd;
-use App\Models\suratsktm;
+use Illuminate\Http\Request;
 use App\Models\suratsktmsiswa;
 use App\Models\suratwalinikah;
-use Illuminate\Http\Request;
+use App\Models\suratkehilangan;
+use App\Models\suratpenghasilan;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class SuratController extends Controller
 {
@@ -50,19 +52,12 @@ class SuratController extends Controller
     public function showSKD(){
         $title = 'Buat Surat Keterangan Domisili';
 
-        return view('formsurat.FormSKD', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKD', compact('title', 'nomor_surat'));
     }
-
-    public function showeditSKD($id){
-        $title = 'Buat Surat Keterangan Domisili';
-        $surat = daftarsurat::findOrFail($id);
-
-        return view('editsurat.editSKD', [
-            'title' => $title,
-            'surat' => $surat
-        ]);
-    }
-
 
     public function submitDomisili(Request $request){
         $request->validate([
@@ -101,14 +96,14 @@ class SuratController extends Controller
         return redirect('/user/operator/kesekretariatan')->with('success', 'Surat Berhasil Dibuat');
     }
 
-    public function update_domisili(Request $request, $id){
-        dd($request->all());
-    }
-
     public function showSK(){
         $title = 'Buat Surat Keterangan Untuk Warga Tertentu';
 
-        return view('formsurat.FormSK', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSK', compact('title', 'nomor_surat'));
     }
 
     public function submitSK(Request $request){
@@ -152,7 +147,11 @@ class SuratController extends Controller
     public function showSKTMsiswa(){
         $title = 'Buat Surat Keretangan Tidak Mampu untuk Siswa';
 
-        return view('formsurat.FormSKTMS', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKTMS', compact('title', 'nomor_surat'));
     }
 
     public function submitSKTMS(Request $request){
@@ -198,7 +197,11 @@ class SuratController extends Controller
     public function showSKTM(){
         $title = 'Buat Surat Keretangan Tidak Mampu';
 
-        return view('formsurat.FormSKTM', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKTM', compact('title', 'nomor_surat'));
     }
 
     public function submitSKTM(Request $request){
@@ -242,7 +245,11 @@ class SuratController extends Controller
     public function showSKK(){
         $title = 'Buat Surat Keterangan Kehilangan';
 
-        return view('formsurat.FormSKK', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKK', compact('title', 'nomor_surat'));
     }
 
     public function submitSKK(Request $request){
@@ -287,7 +294,11 @@ class SuratController extends Controller
     public function showSKWALI(){
         $title = 'Buat Surat Keterangan Wali Nikah';
 
-        return view('formsurat.FormSKwalinikah', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKwalinikah', compact('title', 'nomor_surat'));
     }
 
     public function submitSKwalinikah(Request $request){
@@ -331,7 +342,11 @@ class SuratController extends Controller
     public function showSKP(){
         $title = 'Buat Surat Keterangan Penghasilan';
 
-        return view('formsurat.FormSKP', compact('title')); 
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKP', compact('title', 'nomor_surat')); 
     }
 
     public function submitSKP(Request $request){
@@ -375,7 +390,11 @@ class SuratController extends Controller
     public function showSKCK(){
         $title = 'Buat Surat Pengantar SKCK';
 
-        return view('formsurat.FormSKCK', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.FormSKCK', compact('title', 'nomor_surat'));
     }
 
     public function submitSKCK(Request $request){
@@ -417,7 +436,11 @@ class SuratController extends Controller
     public function showLain(){
         $title = "Catat Nomor Surat Diluar Aplikasi";
 
-        return view('formsurat.Formlain', compact('title'));
+        $nomor_surat = DB::table('daftarsurats')
+                     ->orderBy('created_at', 'desc')
+                     ->value('nomor_surat');
+
+        return view('formsurat.Formlain', compact('title', 'nomor_surat'));
     }
 
     public function submitLain(Request $request){

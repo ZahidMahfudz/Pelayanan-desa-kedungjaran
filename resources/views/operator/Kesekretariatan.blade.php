@@ -39,7 +39,42 @@
                         @endif
                     </td>
                     @if ($item->jenis_surat != 'SKD' && $item->jenis_surat != 'SK' && $item->jenis_surat != 'SKTMS' && $item->jenis_surat != 'SKTM' && $item->jenis_surat != 'SKK' && $item->jenis_surat != 'SKWN' && $item->jenis_surat != 'SKP' && $item->jenis_surat != 'SKCK')
-                        <td>-</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Aksi
+                                </button>
+                                <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/showeditsurat/{{ $item->id }}">Edit</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item hapussurat" href="/hapussurat/{{ $item->id }}" data-nomor-surat="{{ $item->nomor_surat }}">Hapus</a></li>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $(document).on('click', '.hapussurat', function(e) {
+                                            e.preventDefault();
+                                            var link = $(this).attr("href");
+                                            var nomorsurat = $(this).data("nomor-surat");
+                                    
+                                            Swal.fire({
+                                                title: "Apakah anda yakin?",
+                                                text: "Untuk menghapus " + nomorsurat,
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Ya, Hapus!",
+                                                cancelButtonText: "Batal"
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.href = link;
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+                                </ul>
+                            </div>
+                        </td>
                     @else    
                         <td>
                             <!-- Example single danger button -->
@@ -84,4 +119,5 @@
             @endforeach
         </tbody>
     </table>
+    {!! $data->withQueryString()->links('pagination::bootstrap-5') !!}
 </x-layout>

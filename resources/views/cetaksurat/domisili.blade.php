@@ -115,7 +115,7 @@
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian Surat Keterangan Domisili ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian Surat Keterangan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     

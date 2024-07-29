@@ -25,7 +25,7 @@
         margin-left: 10px;
     }
     .content{
-        margin-left: 40px;
+        margin-left: 85px;
     }
     hr {
     border: 1px solid black; /* Mengubah hr menjadi garis tebal dengan ketebalan 1px dan warna hitam */
@@ -35,14 +35,14 @@
 
 <div class="d-flex flex-row bd-highlight mb-0">
     <div class="p-0 bd-highlight">
-        <img src="{{ asset('image/logo-undip.png') }}" alt="logo desa" class="logo">
+        <img src="{{ asset('image/logo-pekalongan.png') }}" alt="logo pekalongan" class="logo">
     </div>
     <div class="p-0 bd-highlight content">
         <header>
             <p>PEMERINTAH KABUPATEN PEKALONGAN</p>
             <p>KECAMATAN SRAGI</p>
             <p class="desa">DESA KEDUNGJARAN</p>
-            <p class="address">Alamat: Jl.Kedungjaran, Desa Kedungjaran, Kec. Sragi, Kab. Pekalongan. Telp: 085741700979</p>
+            <p class="address">Alamat  : Jl.Raya Sragi-Bojong Km 2 No. 3 Pekalongan 51115</p>
         </header>
     </div>
 </div>

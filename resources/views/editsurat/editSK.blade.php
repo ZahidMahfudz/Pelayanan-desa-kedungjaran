@@ -1,18 +1,14 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
-    <x-slot:tabs>Buat SKWN</x-slot>
-
-    <div class="alert alert-warning mt-3" role="alert">
-        <p style="margin-bottom: 0">Nomor Surat Terakhir : {{ $nomor_surat }}</p>
-    </div>
+    <x-slot:tabs>Edit SK</x-slot>
         
-        <form id="skForm" action="submit_skwalinikah" method="POST">
+        <form id="editSK" action="{{ route('edit_SK', ['id'=>$surat->id]) }}" method="POST">
             @csrf
             <fieldset>
                 <legend>Nomor Surat</legend>
                 <div>
                     <div class="col-sm-10">
-                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control"></input>
+                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}" disabled></input>
                     </div>
                 </div>
             </fieldset>
@@ -22,9 +18,11 @@
                     <label for="searchPemohon" class="form-label">Cari Pemohon</label>
                     <div class="col-sm-10">
                         <select id="searchPemohon" class="form-select">
-    
+                            @if($surat)
+                                <option value="{{ $surat->nik_pemohon }}" selected>{{ $surat->nama_pemohon }} | {{ $surat->nik_pemohon }}</option>
+                            @endif
                         </select>
-                        <input type="hidden" id="selectedNIK" name="selectedNIK">
+                        <input type="hidden" id="selectedNIK" name="selectedNIK" value="{{ $surat->nik_pemohon }}">
                     </div>
                 </div>
                 <div class="card col-sm-10" style="display: none;" id="pemohonDetails">
@@ -42,16 +40,12 @@
                 <div>
                     <div class="col-sm-10">
                         <label for="keterangan" class="form-label">Tulis keterangan Pemohon</label>
-                        <textarea name="keterangan" id="keterangan" cols="5" rows="5" class="form-control"></textarea>
-                    </div>
-                    <div class="col-sm-10">
-                        <label for="keperluan" class="form-label">Tulis keperluan Pemohon</label>
-                        <textarea name="keperluan" id="keperluan" cols="5" rows="5" class="form-control"></textarea>
+                        <textarea name="keterangan" id="keterangan" cols="5" rows="5" class="form-control">{{ $sk->keterangan }}</textarea>
                     </div>
                 </div>
             </fieldset>
             <!-- Lanjutkan dengan fieldset lain -->
-            <button type="submit" class="btn btn-primary mt-3 mb-4 addsk">Buat</button>
+            <button type="submit" class="btn btn-primary mt-3 addsk">Edit</button>
         </form>
     
         <script type="text/javascript">
