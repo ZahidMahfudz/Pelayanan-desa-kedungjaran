@@ -114,7 +114,7 @@ class ExportController extends Controller
         $section->addTextBreak(1);
 
         $section->addText(
-            'Yang bertanda tangan dibawah ini, kami Kepala Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan Menerangkan bahwa:',
+            'Yang bertanda tangan dibawah ini, kami Kepala Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan menerangkan bahwa:',
             array('name' => 'Times New Romah', 'size' => 12),
             $paragraphStyle
         );

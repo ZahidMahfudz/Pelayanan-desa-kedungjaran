@@ -31,30 +31,5 @@ class DatabaseSeeder extends Seeder
             User::create($val); 
         }
 
-        $faker = Faker::create('id_ID');
-
-        for ($i = 0; $i < 50; $i++) {
-            DB::table('penduduks')->insert([
-                'NIK' => $faker->unique()->numerify('################'),
-                'kk' => $faker->numerify('################'),
-                'nama' => $faker->name,
-                'jenis_kelamin' => $faker->randomElement(['L', 'P']),
-                'tempat_lahir' => $faker->city,
-                'tanggal_lahir' => $faker->date(),
-                'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Kong Hu Cu']),
-                'status_perkawinan' => $faker->randomElement(['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati']),
-                'shdk' => $faker->randomElement(['Kepala Keluarga', 'Suami', 'Istri', 'Anak', 'Orang Tua']),
-                'pendidikan' => $faker->randomElement(['Tidak/Belum Sekolah', 'SD', 'SMP', 'SMA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3']),
-                'pekerjaan' => $faker->jobTitle,
-                'nama_ayah' => $faker->name('male'),
-                'nama_ibu' => $faker->name('female'),
-                'dusun' => $faker->randomElement(['Dusun 1', 'Dusun 2', 'Dusun 3', 'Dusun 4']),
-                'RT' => $faker->numberBetween(1, 10),
-                'RW' => $faker->numberBetween(1, 5),
-                'kewarganegaraan' => $faker->randomElement(['WNI', 'WNA']),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
     }
 }
