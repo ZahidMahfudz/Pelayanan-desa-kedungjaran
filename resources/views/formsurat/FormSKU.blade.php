@@ -1,30 +1,31 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot>
-    <x-slot:tabs>Buat SK</x-slot>
+    <x-slot:tabs>Buat SKU</x-slot>
+
+    <div class="alert alert-warning mt-3" role="alert">
+        <p style="margin-bottom: 0">Nomor Surat Terakhir : {{ $nomor_surat }}</p>
+    </div>
         
-        <form id="skForm" action="{{ route('edit_lain', ['id'=>$surat->id]) }}" method="POST">
+        <form id="skForm" action="submit_SKU" method="POST">
             @csrf
             <fieldset>
                 <legend>Nomor Surat</legend>
                 <div>
                     <div class="col-sm-10">
-                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}"></input>
-                    </div>
-                </div>
-            </fieldset>
-            <legend>Tanggal Surat</legend>
-                <div>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" name="tanggal_surat" id="tanggal_surat" value="{{ $surat->tanggal_surat }}">
+                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control"></input>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="mt-2">
                 <legend>Data Pemohon</legend>
                 <div class="mt-2 mb-3 row">
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nama_pemohon" id="nama_pemohon" value="{{ $surat->nama_pemohon }}">
-                        </div>
+                    <label for="searchPemohon" class="form-label">Cari Pemohon</label>
+                    <div class="col-sm-10">
+                        <select id="searchPemohon" class="form-select">
+    
+                        </select>
+                        <input type="hidden" id="selectedNIK" name="selectedNIK">
+                    </div>
                 </div>
                 <div class="card col-sm-10" style="display: none;" id="pemohonDetails">
                     <div class="card-body">
@@ -40,13 +41,17 @@
                 <legend>Keterangan Tambahan</legend>
                 <div>
                     <div class="col-sm-10">
-                        <label for="perihal" class="form-label">Perihal</label>
-                        <input type="text" name="perihal" id="perihal" cols="5" rows="5" class="form-control" value="{{ $surat->jenis_surat }}">
+                        <label for="usaha" class="form-label">Tulis Usaha Pemohon</label>
+                        <input type="text" name="usaha" id="usaha" class="form-control">
+                    </div>
+                    <div class="col-sm-10 mt-2">
+                        <label for="keperluan" class="form-label">Tulis keperluan Pemohon</label>
+                        <textarea name="keperluan" id="keperluan" cols="5" rows="5" class="form-control"></textarea>
                     </div>
                 </div>
             </fieldset>
             <!-- Lanjutkan dengan fieldset lain -->
-            <button type="submit" class="btn btn-primary mt-3 addsk">Edit</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-4 addsk">Buat</button>
         </form>
     
         <script type="text/javascript">

@@ -8,6 +8,7 @@ use App\Models\namattdkades;
 use Illuminate\Http\Request;
 use App\Imports\PendudukImport;
 use App\Http\Controllers\Controller;
+use App\Models\domisililuar;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPUnit\Framework\Constraint\Operator;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
@@ -26,7 +27,10 @@ class OperatController extends Controller
 {
     public function showKesekretariatan(){
         $title = 'Kesekretariatan';
-        $data = daftarsurat::orderBy('created_at', 'desc')->paginate(10);
+        $data = daftarsurat::leftJoin('domisililuars', 'domisililuars.daftarsurat_id', '=', 'daftarsurats.id')
+                        ->select('daftarsurats.*', 'domisililuars.perihal')
+                        ->orderBy('daftarsurats.created_at', 'desc')
+                        ->paginate(10);
         return view('operator.kesekretariatan', compact('title', 'data'));
     }
 
@@ -255,15 +259,16 @@ class OperatController extends Controller
         $total_surat = daftarsurat::count();
 
         $suratData = [
-            'SK' => daftarsurat::where('jenis_surat', 'SK')->count(),
-            'SKD' => daftarsurat::where('jenis_surat', 'SKD')->count(),
-            'SKTM Siswa' => daftarsurat::where('jenis_surat', 'SKTMS')->count(),
-            'SKTM' => daftarsurat::where('jenis_surat', 'SKTM')->count(),
-            'SKK' => daftarsurat::where('jenis_surat', 'SKK')->count(),
-            'SKWN' => daftarsurat::where('jenis_surat', 'SKWN')->count(),
-            'SKP' => daftarsurat::where('jenis_surat', 'SKP')->count(),
-            'SKCK' => daftarsurat::where('jenis_surat', 'SKCK')->count(),
-            'Lain-lain' => daftarsurat::whereNotIn('jenis_surat', ['SK', 'SKD', 'SKTMS', 'SKTM', 'SKK', 'SKWN', 'SKP', 'SKCK'])->count()
+            'SK' => daftarsurat::where('jenis_surat', 'Surat Keterangan')->count(),
+            'SKD' => daftarsurat::where('jenis_surat', 'Surat Keterangan Domisili')->count(),
+            'SKTM Siswa' => daftarsurat::where('jenis_surat', 'Surat Keterangan Tidak Mampu Siswa')->count(),
+            'SKTM' => daftarsurat::where('jenis_surat', 'Surat Keterangan Tidak Mampu')->count(),
+            'SKK' => daftarsurat::where('jenis_surat', 'Surat Keterangan Kehilangan')->count(),
+            'SKWN' => daftarsurat::where('jenis_surat', 'Surat Keterangan Menjadi Wali Nikah')->count(),
+            'SKP' => daftarsurat::where('jenis_surat', 'Surat Keterangan Penghasilan')->count(),
+            'SKU' => daftarsurat::where('jenis_surat', 'Surat Keterangan Usaha')->count(),
+            'SKCK' => daftarsurat::where('jenis_surat', 'Surat Pengantar SKCK')->count(),
+            'Lain-lain' => daftarsurat::whereNotIn('jenis_surat', ['Surat Keterangan', 'Surat Keterangan Domisili', 'Surat Keterangan Tidak Mampu Siswa', 'Surat Keterangan Tidak Mampu', 'Surat Keterangan Kehilangan', 'Surat Keterangan Menjadi Wali Nikah', 'Surat Keterangan Penghasilan', 'Surat Pengantar SKCK', 'Surat Keterangan Usaha'])->count()
         ];
 
         $total_penduduk = penduduk::count();
@@ -420,6 +425,10 @@ class OperatController extends Controller
                 // Delete associated suratskck entry if it exists
                 if ($surat->suratskck) {
                     $surat->suratskck()->delete();
+                }
+
+                if ($surat->domisililuar) {
+                    $surat->domisililuar()->delete();
                 }
 
                 // Delete the daftarsurat entry

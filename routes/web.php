@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\editSuratConttoller;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OperatController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SuratController;
@@ -45,11 +46,19 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/addnamattdkades', [OperatController::class, 'addnamattdkades'])->name('addnamattdkades');
     Route::post('/edit_namattdkades/{id}', [OperatController::class, 'editTTD'])->name('edit_namattdkades');
 
+    //coba eksport word
+    Route::get('/export-word/{id}', [ExportController::class, 'exportWord']);
+
     //show form surat
     //SKD
     Route::get('/buatformSKD', [SuratController::class, 'showSKD']);
     Route::post('/submit_domisili', [SuratController::class, 'submitDomisili'])->name('submit_domisili');
     Route::post('edit_domisili/{id}', [editSuratConttoller::class, 'editdomisili'])->name('edit_domisili');
+
+    //SKD luar
+    Route::get('/buatformSKDluar', [SuratController::class, 'showSKDluar']);
+    Route::post('/submit_skd_luar', [SuratController::class, 'submitSKDLuar'])->name('submit_skd_luar');
+    Route::post('/edit_manual/{id}', [editSuratConttoller::class, 'editManual'])->name('edit_manual');
 
     //SK
     Route::get('/buatformSK', [SuratController::class, 'showSK']);
@@ -80,6 +89,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/buatformskp', [SuratController::class, 'showSKP']);
     Route::post('submit_skp', [SuratController::class, 'submitSKP'])->name('submit_skp');
     Route::post('/update_skp/{id}', [editSuratConttoller::class, 'editSKP'])->name('update_skp');
+
+    //SKU
+    Route::get('/buatformsku', [SuratController::class, 'showSKU']);
+    Route::post('/submit_SKU', [SuratController::class, 'submitSKU'])->name('submit_SKU');
+    Route::post('/edit_SKU/{id}', [editSuratConttoller::class, 'editSKU'])->name('edit_SKU');
 
     //SKCK
     Route::get('/buatformSKCK', [SuratController::class, 'showSKCK']);

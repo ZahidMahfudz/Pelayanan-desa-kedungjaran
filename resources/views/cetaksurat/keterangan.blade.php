@@ -35,7 +35,7 @@
     
 
     <div class="isi-surat">
-        <p class="indent justify">Yang bertanda tangan dibawah ini, Kami Kepala Desa Kedungjaran, Kecamatan Sragi, Kabupaten Pekalongan Menerangkan bahwa:</p>
+        <p class="indent justify">Yang bertanda tangan dibawah ini, kami Kepala Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan Menerangkan bahwa:</p>
         <table class="table table-borderless table-sm" style="width: 100%;">
             <tr>
                 <td style="width: 25%;">Nama</td>
@@ -96,18 +96,25 @@
             <tr>
                 <td style="width: 25%;">Tempat Tinggal</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }}, RT {{ $penduduk->RT }}, RW {{ $penduduk->RW }}, Kecamatan Sragi, Kab. Pekalongan, Jawa Tengah</td>
+                <td style="width: 72%; margin-bottom:0;" class="justify">{{ $penduduk->dusun }} RT {{ $penduduk->RT }} RW {{ $penduduk->RW }} Desa Kedungjaran Kecamatan Sragi Kab. Pekalongan Jawa Tengah</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keterangan</td>
                 <td style="width: 3%;">: </td>
                 <td style="width: 72%;">
-                    <p class="justify">Bahwa orang tersebut benar warga Desa Kedungjaran yang berdomisili di alamat tersebut <strong>{{ $suratsk->keterangan }}</strong></p>
+                    <p class="justify" style="margin-bottom: 0;">{{ $suratsk->keterangan }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%;">keperluan</td>
+                <td style="width: 3%;">: </td>
+                <td style="width: 72%;">
+                    <p class="justify">{{ $suratsk->keperluan }}</p>
                 </td>
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian Surat Keterangan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian surat keterangan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     

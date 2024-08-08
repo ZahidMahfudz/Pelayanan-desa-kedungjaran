@@ -59,4 +59,15 @@ class daftarsurat extends Model
     {
         return $this->hasMany(suratskck::class);
     }
+
+    public function domisililuar()
+    {
+        return $this->hasMany(domisililuar::class);
+    }
+
+    public function suratusaha()
+    {
+        return $this->hasMany(suratusaha::class);
+    }
+
 }

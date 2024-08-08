@@ -9,7 +9,7 @@
                 <legend>Nomor Surat</legend>
                 <div>
                     <div class="col-sm-10">
-                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}" disabled></input>
+                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}"></input>
                     </div>
                 </div>
             </fieldset>

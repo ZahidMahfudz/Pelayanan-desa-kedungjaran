@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot>
     <x-slot:tabs>Buat SK</x-slot>
 
-    <div class="alert alert-warning mt-3" role="alert">
+    <div class="alert alert-warning mt-3 col-sm-10" role="alert">
         <p style="margin-bottom: 0;">Nomor Surat Terakhir : {{ $nomor_surat }}</p>
     </div>
         
@@ -15,16 +15,26 @@
                         <input type="text" name="nomor_surat" id="nomor_surat" class="form-control"></input>
                     </div>
                 </div>
+                <legend>Tanggal Surat</legend>
+                <div>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="tanggal_surat" id="tanggal_surat">
+                    </div>
+                </div>
             </fieldset>
             <fieldset class="mt-2">
                 <legend>Data Pemohon</legend>
                 <div class="mt-2 mb-3 row">
-                    <label for="searchPemohon" class="form-label">Cari Pemohon</label>
+                    {{-- <label for="searchPemohon" class="form-label">Cari Pemohon</label>
                     <div class="col-sm-10">
                         <select id="searchPemohon" class="form-select">
     
                         </select>
                         <input type="hidden" id="selectedNIK" name="selectedNIK">
+                    </div> --}}
+                    <div class="col-sm-10">
+                        <label for="nama_pemohon" class="form-label">Pemohon</label>
+                        <input type="text" class="form-control" name="nama_pemohon" id="nama_pemohon">
                     </div>
                 </div>
                 <div class="card col-sm-10" style="display: none;" id="pemohonDetails">

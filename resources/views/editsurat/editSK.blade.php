@@ -8,7 +8,7 @@
                 <legend>Nomor Surat</legend>
                 <div>
                     <div class="col-sm-10">
-                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}" disabled></input>
+                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}"></input>
                     </div>
                 </div>
             </fieldset>
@@ -41,6 +41,10 @@
                     <div class="col-sm-10">
                         <label for="keterangan" class="form-label">Tulis keterangan Pemohon</label>
                         <textarea name="keterangan" id="keterangan" cols="5" rows="5" class="form-control">{{ $sk->keterangan }}</textarea>
+                    </div>
+                    <div class="col-sm-10">
+                        <label for="keperluan" class="form-label">Tulis keperluan Pemohon</label>
+                        <textarea name="keperluan" id="keperluan" cols="5" rows="5" class="form-control">{{ $sk->keperluan }}</textarea>
                     </div>
                 </div>
             </fieldset>

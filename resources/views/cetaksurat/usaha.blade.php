@@ -29,7 +29,7 @@
 </style>
 
 <x-layoutsurat>
-    <x-slot:tabs>Cetak: SKTM</x-slot>
+    <x-slot:tabs>Cetak: SKU</x-slot>
     <x-slot:judulsurat>{{ $judulsurat }}</x-slot>
     <x-slot:nomorsurat>{{ $daftarsurat->nomor_surat }}</x-slot>
     
@@ -101,29 +101,28 @@
             <tr>
                 <td style="width: 25%;">Tempat Tinggal</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }} RT {{ $penduduk->RT }} RW {{ $penduduk->RW }} Kecamatan Sragi Kab. Pekalongan Jawa Tengah</td>
+                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }} RT {{ $penduduk->RT }} RW {{ $penduduk->RW }} Desa Kedungjaran Kecamatan Sragi Kab. Pekalongan Jawa Tengah</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keterangan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">
-                    <p class="justify" style="margin-bottom: 0;">Bahwa orang tersebut benar warga Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan yang perekonomiannya tidak mampu dan {{ $suratsktm->keterangan }}</p>
+                <td style="width: 72%;" class="justify">
+                    Bahwa orang tersebut benar-benar warga Desa Kedungjaran yang memiliki usaha {{ $suratusaha->usaha }}
                 </td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keperluan</td>
                 <td style="width: 3%;">: </td>
                 <td style="width: 72%;">
-                    {{ $suratsktm->keperluan }}
+                    {{ $suratusaha->keperluan }}
                 </td>
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian surat keterangan tidak mampu ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian surat keterangan usaha ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     
-
     <x-ttdkades>
         <x-slot:tanggalsurat>{{ $tanggal_surat }}</x-slot>
         @foreach ($ttd as $ttd)

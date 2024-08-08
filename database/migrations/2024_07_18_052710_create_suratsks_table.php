@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('daftarsurat_id');
             $table->string('keterangan');
+            $table->string('keperluan');
             $table->timestamps();
 
             $table->foreign('daftarsurat_id')->references('id')->on('daftarsurats')->onDelete('cascade');

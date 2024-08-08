@@ -35,7 +35,7 @@
     
 
     <div class="isi-surat">
-        <p class="indent justify">Yang bertanda tangan dibawah ini, Kami Kepala Desa Kedungjaran, Kecamatan Sragi, Kabupaten Pekalongan Menerangkan bahwa:</p>
+        <p class="indent justify">Yang bertanda tangan dibawah ini, kami Kepala Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan Menerangkan bahwa:</p>
         <table class="table table-borderless table-sm" style="width: 100%;">
             <tr>
                 <td style="width: 25%;">Nama</td>
@@ -101,13 +101,13 @@
             <tr>
                 <td style="width: 25%;">Tempat Tinggal</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }}, RT {{ $penduduk->RT }}, RW {{ $penduduk->RW }}, Kecamatan Sragi, Kab. Pekalongan, Jawa Tengah</td>
+                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }} RT {{ $penduduk->RT }} RW {{ $penduduk->RW }} Desa Kedungjaran Kecamatan Sragi Kab. Pekalongan Jawa Tengah</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keterangan</td>
                 <td style="width: 3%;">: </td>
                 <td style="width: 72%;" class="justify">
-                    Bahwa orang tersebut benar-benar warga Desa Kedungjaran yang pekerjaannya {{ $penduduk->pekerjaan }} dengan penghasilan Rp.{{ number_format($suratpenghasilan->penghasilan) }} Per Bulan
+                    Bahwa orang tersebut benar-benar warga Desa Kedungjaran yang pekerjaannya {{ $penduduk->pekerjaan }} dengan penghasilan Rp.{{ number_format($suratpenghasilan->penghasilan) }} per bulan
                 </td>
             </tr>
             <tr>
@@ -119,7 +119,7 @@
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian Surat Keterangan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian surat keterangan penghasilan ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     

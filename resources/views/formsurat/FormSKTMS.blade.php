@@ -63,7 +63,7 @@
             <div>
                 <div class="col-sm-10">
                     <label for="asal_sekolah" class="form-label">Asal Sekolah </label>
-                    <textarea name="asal_sekolah" id="asal_sekolah" cols="5" rows="5" class="form-control"></textarea>
+                    <input type="text" name="asal_sekolah" id="asal_sekolah" class="form-control">
                 </div>
                 <div class="col-sm-10">
                     <label for="keperluan" class="form-label">Tulis Keperluan Surat</label>

@@ -29,8 +29,8 @@
 </style>
 
 <x-layoutsurat>
-    <x-slot:tabs>Cetak: SKTM</x-slot>
-    <x-slot:judulsurat>{{ $judulsurat }}</x-slot>
+    <x-slot:tabs>Cetak: Manual</x-slot>
+    <x-slot:judulsurat>{{ strtoupper($judulsurat) }}</x-slot>
     <x-slot:nomorsurat>{{ $daftarsurat->nomor_surat }}</x-slot>
     
 
@@ -40,86 +40,82 @@
             <tr>
                 <td style="width: 25%;">Nama</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;"><strong>{{ $penduduk->nama }}</strong></td>
+                <td style="width: 72%;"><strong>{{ $daftarsurat->nama_pemohon }}</strong></td>
             </tr>
             <tr>
                 <td style="width: 25%;">NIK</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->NIK }}</td>
+                <td style="width: 72%;">{{ $daftarsurat->nik_pemohon }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Tempat/Tanggal Lahir</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->tempat_lahir }}, {{ \Carbon\Carbon::parse($penduduk->tanggal_lahir)->format('d-m-Y') }}</td>
+                <td style="width: 72%;">{{ $manual->tempat_lahir_pemohon }}, {{ \Carbon\Carbon::parse($manual->tanggal_lahir_pemohon)->format('d-m-Y') }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Jenis Kelamin</td>
                 <td style="width: 3%;">: </td>
                 <td style="width: 72%;">
-                    @if($penduduk->jenis_kelamin == 'P')
+                    @if($manual->jenis_kelamin_pemohon == 'P')
                         Perempuan
-                    @elseif($penduduk->jenis_kelamin == 'L')
+                    @elseif($manual->jenis_kelamin_pemohon == 'L')
                         Laki-laki
                     @else
-                        {{ $penduduk->jenis_kelamin }} <!-- Tampilkan nilai langsung jika tidak ada kecocokan -->
+                        {{ $manual->jenis_kelamin_pemohon }} <!-- Tampilkan nilai langsung jika tidak ada kecocokan -->
                     @endif
                 </td>
             </tr>
             <tr>
                 <td style="width: 25%;">Agama</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->agama }}</td>
+                <td style="width: 72%;">{{ $manual->agama_pemohon }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Kewarganegaraan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->kewarganegaraan }}</td>
-            </tr>
-            <tr>
-                <td style="width: 25%;">Pendidikan Terakhir</td>
-                <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->pendidikan }}</td>
+                <td style="width: 72%;">{{ $manual->kewarganegaraan_pemohon }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Pekerjaan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">{{ $penduduk->pekerjaan }}</td>
+                <td style="width: 72%;">{{ $manual->pekerjaan_pemohon }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Status Perkawinan</td>
                 <td style="width: 3%;">: </td>
                 <td style="width: 72%;">
-                    @if($penduduk->status_perkawinan == 'kawin')
+                    @if($manual->status_perkawinan_pemohon == 'kawin')
                         Kawin
-                    @elseif($penduduk->status_perkawinan == 'belum_kawin')
+                    @elseif($manual->status_perkawinan_pemohon == 'belum_kawin')
                         Belum kawin
                     @else
-                        {{ $penduduk->status_perkawinan }} <!-- Tampilkan nilai langsung jika tidak ada kecocokan -->
+                        {{ $manual->status_perkawinan_pemohon }} <!-- Tampilkan nilai langsung jika tidak ada kecocokan -->
                     @endif
                 </td>
             </tr>
             <tr>
-                <td style="width: 25%;">Tempat Tinggal</td>
+                <td style="width: 25%;">Pendidikan Terakhir</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;" class="justify">{{ $penduduk->dusun }} RT {{ $penduduk->RT }} RW {{ $penduduk->RW }} Kecamatan Sragi Kab. Pekalongan Jawa Tengah</td>
+                <td style="width: 72%;">{{ $manual->pendidikan_pemohon }}</td>
+            </tr>
+            <tr>
+                <td style="width: 25%;">Alamat</td>
+                <td style="width: 3%;">: </td>
+                <td style="width: 72%;" class="justify">{{ $manual->alamat_pemohon }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keterangan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">
-                    <p class="justify" style="margin-bottom: 0;">Bahwa orang tersebut benar warga Desa Kedungjaran Kecamatan Sragi Kabupaten Pekalongan yang perekonomiannya tidak mampu dan {{ $suratsktm->keterangan }}</p>
-                </td>
+                <td style="width: 72%;" class="justify">{{ $manual->keterangan }}</td>
             </tr>
             <tr>
                 <td style="width: 25%;">Keperluan</td>
                 <td style="width: 3%;">: </td>
-                <td style="width: 72%;">
-                    {{ $suratsktm->keperluan }}
-                </td>
+                <td style="width: 72%;">{{ $manual->keperluan }}</td>
             </tr>
         </table>
         <p style="margin-top: 0">
-            Demikian surat keterangan tidak mampu ini kami buat agar dapat dipergunakan sebagaimana mestinya.
+            Demikian surat ini kami buat agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
     

@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot>
     <x-slot:tabs>Buat SKD</x-slot>
 
-    <div class="alert alert-warning mt-3" role="alert">
+    <div class="alert alert-warning mt-3 col-sm-10" role="alert">
         <p>Nomor Surat Terakhir : {{ $nomor_surat }}</p>
     </div>
     
@@ -41,8 +41,8 @@
             <legend>Keterangan Tambahan</legend>
             <div>
                 <div class="col-sm-10">
-                    <label for="alamat" class="form-label">Tulis alamat Pemohon</label>
-                    <textarea name="alamat" id="alamat" cols="5" rows="5" class="form-control"></textarea>
+                    <label for="keterangan" class="form-label">Tulis keterangan Pemohon</label>
+                    <textarea name="keterangan" id="keterangan" cols="5" rows="5" class="form-control"></textarea>
                 </div>
                 <div class="col-sm-10">
                     <label for="keperluan" class="form-label">Tulis Keperluan Pemohon</label>
